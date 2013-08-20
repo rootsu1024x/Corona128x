@@ -22,7 +22,7 @@ local displayComponentDefaults = {
 	text=nil,
 	fontName=nil,
 	fontSize=nil,
-	stroke={color={r=nil,g=nil,b=nil,a=nil},width=nil},
+	stroke={r=nil,g=nil,b=nil,width=nil},
 	visible=nil,
 	imgSheetOpt=nil, --イメージシートを作る際のオプション ファイルはfileオプションを用いてイメージシートが作成される
 	isPhysics=nil,
@@ -38,7 +38,11 @@ local displayComponentDefaults = {
 		complex=nil,-- isComplexがtrueのときに使用 複合物理オブジェクトを指定できる
 	},
 	additionalTable=nil,
-	eventsTable=nil,
+	eventsArray=nil,
+	onInitialize=nil,
+	initializeTable=nil,
+	onLoaded=nil,
+	loadedTable=nil
 }
 
 return displayComponentDefaults

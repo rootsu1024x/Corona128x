@@ -9,6 +9,7 @@ function scene:createScene(event)
 	componentMan.load("Components.RectTest","MyRect")
 	componentMan.load("Components.RoundedRectTest","MyRoundedRect")
 	componentMan.load("Components.CircleTest","MyCircle")
+	componentMan.load("Components.CircleTest","MyCircle")
 	componentMan.load("Components.LineTest","MyLine")
 	componentMan.load("Components.TextTest","MyText")
 end
