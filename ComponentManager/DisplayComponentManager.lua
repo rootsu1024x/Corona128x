@@ -4,6 +4,14 @@ local groups = require("ComponentManager.DisplayGroupsManager")
 
 displayComponentManager.groups = groups
 
+local commonFunction = require("ComponentManager.CommonFunction")
+
+local setNilToZero = commonFunction.setNilToZero
+local setIsntNil = commonFunction.setIsntNil
+local runIsntNil = commonFunction.runIsntNil 
+local setEvents = commonFunction.setEvents
+local setAdditionalTable = commonFunction.setAdditionalTable
+
 local function setCoord(displayObject,componentSpec)
 	if componentSpec.movX == nil then
 		displayObject.x = componentSpec.x
@@ -15,32 +23,6 @@ local function setCoord(displayObject,componentSpec)
 		displayObject.y = componentSpec.y
 	else
 		displayObject.y = displayObject.y + componentSpec.movY
-	end
-end
-
-local function setNilToZero(target,propertyNames)
-	for i = 1,table.maxn(propertyNames) do
-		if target[propertyNames[i]] == nil then
-			target[propertyNames[i]] = 0
-		end
-	end
-end
-
-local function setIsntNil(target,property,source)
-	if source == nil then
-		return
-	else
-		target[property] = source
-	end
-end
-
-local function runIsntNil(target,property,additionalTable)
-	if target[property] ~= nil then
-		if additionalTable ~= nil then
-			target[property](unpack(additionalTable))
-		else
-			target[property]()
-		end
 	end
 end
 
@@ -139,21 +121,6 @@ local function loadTextComponent(componentSpec,parent)
 	return text
 end
 
-local function setAdditionalTable(displayObject,componentSpec)
-	if componentSpec.additionalTable ~= nil then
-		for key,value in pairs(componentSpec.additionalTable) do
-			displayObject[key] = value
-		end
-	end
-end
-
-local function setEvents(displayObject,componentSpec)
-	if componentSpec.eventsArray ~= nil then
-		for i = 1,table.maxn(componentSpec.eventsArray) do
-			displayObject:addEventListener(componentSpec.eventsArray[i].eventName,componentSpec.eventsArray[i].onEvent)
-		end
-	end
-end
 
 local loadFunctionTableByType = {
 	image=loadImageComponent,
@@ -177,6 +144,7 @@ local function loadDisplayComponent(componentFile,componentName)
 	else
 		runIsntNil(componentSpec,"onLoaded",{displayObject})
 	end
+	return displayObject
 end
 
 displayComponentManager.load = loadDisplayComponent

@@ -25,18 +25,6 @@ local displayComponentDefaults = {
 	stroke={r=nil,g=nil,b=nil,width=nil},
 	visible=nil,
 	imgSheetOpt=nil, --イメージシートを作る際のオプション ファイルはfileオプションを用いてイメージシートが作成される
-	isPhysics=nil,
-	physicsSpec={
-		type=nil,
-		density=nil,
-		friction=nil,
-		bounce=nil,
-		shapeType=nil,
-		radius=nil,
-		shape=nil,
-		isComplex=nil,
-		complex=nil,-- isComplexがtrueのときに使用 複合物理オブジェクトを指定できる
-	},
 	additionalTable=nil,
 	eventsArray=nil,
 	onInitialize=nil,
