@@ -8,22 +8,30 @@ local commonFunction = require("ComponentManager.CommonFunction")
 
 local setNilToZero = commonFunction.setNilToZero
 local setIsntNil = commonFunction.setIsntNil
+local setIfToAny = commonFunction.setIfToAny
 local runIsntNil = commonFunction.runIsntNil 
 local setEvents = commonFunction.setEvents
 local setAdditionalTable = commonFunction.setAdditionalTable
 
 local function setCoord(displayObject,componentSpec)
 	if componentSpec.movX == nil then
+		setIfToAny(componentSpec,"x","Center",display.contentWidth / 2)
 		displayObject.x = componentSpec.x
 	else
 		displayObject.x = displayObject.x + componentSpec.movX
 	end
 
 	if componentSpec.movY == nil then
+		setIfToAny(componentSpec,"y","Center",display.contentHeight / 2)
 		displayObject.y = componentSpec.y
 	else
 		displayObject.y = displayObject.y + componentSpec.movY
 	end
+end
+
+local function setSizeToDisplaySizeIfMax(componentSpec)
+	setIfToAny(componentSpec,"w","Max",display.contentWidth)
+	setIfToAny(componentSpec,"h","Max",display.contentHeight)
 end
 
 local function setReferencePoint(displayObject,componentSpec)
@@ -76,12 +84,14 @@ local function setStrokeAndFill(displayObject,componentSpec)
 end
 
 local function loadImageComponent(componentSpec,parent)
+	setSizeToDisplaySizeIfMax(componentSpec)
 	local image = display.newImageRect(parent,componentSpec.file,componentSpec.w,componentSpec.h)
 	commonShapeProc(image,componentSpec)
 	return image
 end
 
 local function loadRectComponent(componentSpec,parent)
+	setSizeToDisplaySizeIfMax(componentSpec)
 	local rect = display.newRect(parent,componentSpec.x,componentSpec.y,componentSpec.w,componentSpec.h)
 	commonShapeProc(rect,componentSpec)
 	setStrokeAndFill(rect,componentSpec)
@@ -89,6 +99,7 @@ local function loadRectComponent(componentSpec,parent)
 end
 
 local function loadRoundedRectComponent(componentSpec,parent)
+	setSizeToDisplaySizeIfMax(componentSpec)
 	local rrect = display.newRoundedRect(parent,componentSpec.x,componentSpec.y,componentSpec.w,componentSpec.h,componentSpec.radius)
 	commonShapeProc(rrect,componentSpec)
 	setStrokeAndFill(rrect,componentSpec)
@@ -111,7 +122,7 @@ end
 
 local function loadTextComponent(componentSpec,parent)
 	local text = nil
-	if componentSpec.w ~= nil and componentSpec.w ~= nil then
+	if componentSpec.w ~= nil and componentSpec.h ~= nil then
 		text = display.newText(parent,componentSpec.text,componentSpec.x,componentSpec.y,componentSpec.w,componentSpec.h,componentSpec.fontName,componentSpec.fontSize)
 	else
 		text = display.newText(parent,componentSpec.text,componentSpec.x,componentSpec.y,componentSpec.fontName,componentSpec.fontSize)

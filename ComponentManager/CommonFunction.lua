@@ -6,6 +6,12 @@ local function setNilToAny(target,propertyName,anything)
 	end
 end
 
+local function setIfToAny(target,propertyName,condition,anything)
+	if target[propertyName] == condition then
+		target[propertyName] = anything
+	end
+end
+
 local function setNilToZero(target,propertyNames)
 	for i = 1,table.maxn(propertyNames) do
 		if target[propertyNames[i]] == nil then
@@ -50,6 +56,7 @@ end
 
 
 commonFunction.setNilToAny = setNilToAny
+commonFunction.setIfToAny = setIfToAny
 commonFunction.setNilToZero = setNilToZero
 commonFunction.setIsntNil = setIsntNil
 commonFunction.runIsntNil = runIsntNil
